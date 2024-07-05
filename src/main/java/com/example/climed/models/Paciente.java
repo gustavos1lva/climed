@@ -1,7 +1,13 @@
-package com.example.climed.Models;
+package com.example.climed.models;
 
-import jakarta.persistence.*;
 import java.util.Set;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "paciente")
@@ -19,4 +25,5 @@ public record Paciente(
 
         @OneToMany(mappedBy = "paciente")
         Set<Consulta> consultas
-) {}
+) {
+}

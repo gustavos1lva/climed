@@ -1,7 +1,15 @@
-package com.example.climed.Models;
+package com.example.climed.models;
 
-import jakarta.persistence.*;
 import java.util.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "consulta")
@@ -23,12 +31,18 @@ public record Consulta(
         Paciente paciente,
 
         Date data,
+
         String horaInicCon,
+
         String horaFimCon,
+
         Boolean pagou,
+
         Double valorPago,
+
         String formaPagamento,
 
         @OneToOne(mappedBy = "consulta")
         Diagnostico diagnostico
-) {}
+) {
+}

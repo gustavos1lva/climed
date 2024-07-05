@@ -1,13 +1,17 @@
-package com.example.climed.Models;
+package com.example.climed.models;
 
-import jakarta.persistence.*;
 import java.util.Set;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "medico")
 public record Medico(
         @Id
-        String crm,
+        Long crm,
 
         String nomeM,
         String telefoneM,
@@ -15,4 +19,5 @@ public record Medico(
 
         @OneToMany(mappedBy = "medico")
         Set<Agenda> agendas
-) {}
+) {
+}

@@ -1,4 +1,4 @@
-package com.example.climed.Models;
+package com.example.climed.models;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -9,4 +9,5 @@ import jakarta.persistence.Table;
 public record ExerceEsp(
         @EmbeddedId
         ExerceEspKey id
-) {}
+) {
+}
