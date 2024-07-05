@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: "postgres:latest"
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "climed"
+    volumes:
+      - "./db/0-tables.sql:/docker-entrypoint-initdb.d/0-tables.sql"
+      - "./db/1-data.sql:/docker-entrypoint-initdb.d/1-data.sql"
