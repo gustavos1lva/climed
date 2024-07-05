@@ -1,0 +1,7 @@
+spring:
+  application.name: climed
+  datasource:
+    url: jdbc:postgresql://localhost:5432/climed
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
