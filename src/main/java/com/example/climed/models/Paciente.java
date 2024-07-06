@@ -9,9 +9,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
 @Table(name = "paciente")
+@Builder
 public final class Paciente {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long idPac;
     private String cpf;

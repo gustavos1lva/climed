@@ -7,12 +7,12 @@ create table if not exists doenca
 create table if not exists paciente
 (
     id_pac       serial primary key,
-    cpf          varchar(20) unique not null,
+    cpf          varchar(20) unique,
     nome_pac     varchar(50)        not null,
     telefone_pac varchar(20) unique not null,
     endereco     varchar(100),
-    idade        int                not null,
-    sexo         varchar(20)        not null
+    idade        int,
+    sexo         varchar(20)
 );
 
 create table if not exists medico

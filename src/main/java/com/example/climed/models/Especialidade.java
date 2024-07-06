@@ -9,9 +9,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
 @Table(name = "especialidade")
+@Builder
 public final class Especialidade {
     //    @Column(name = "id_esp")
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long idEsp;

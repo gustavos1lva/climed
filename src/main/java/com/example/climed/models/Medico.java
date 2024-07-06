@@ -7,9 +7,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
 @Table(name = "medico")
+@Builder
 public final class Medico {
     @Id private Long crm;
     private String nomeMedico;

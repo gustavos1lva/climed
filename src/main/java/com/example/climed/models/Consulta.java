@@ -1,5 +1,6 @@
 package com.example.climed.models;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,17 +12,23 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "consulta")
+@Builder
+@Getter
+@Setter
 public final class Consulta {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long idCon;
     @ManyToOne @JoinColumn(name = "crm") private Medico medico;
     @ManyToOne @JoinColumn(name = "id_esp"/*, referencedColumnName = "id_esp"*/) private Especialidade especialidade;
     @ManyToOne @JoinColumn(name = "id_pac"/*, referencedColumnName = "id_pac"*/) private Paciente paciente;
     private Date data;
-    private String horaInicCon;
-    private String horaFimCon;
+    private Instant horaInicCon;
+    private Instant horaFimCon;
     private Boolean pagou;
     private Double valorPago;
     private String formaPagamento;
@@ -38,9 +45,9 @@ public final class Consulta {
 
             Date data,
 
-            String horaInicCon,
+            Instant horaInicCon,
 
-            String horaFimCon,
+            Instant horaFimCon,
 
             Boolean pagou,
 
@@ -65,50 +72,6 @@ public final class Consulta {
 
     public Consulta() {
         /* empty on purpose */
-    }
-
-    public Long getIdCon() {
-        return idCon;
-    }
-
-    public Medico getMedico() {
-        return medico;
-    }
-
-    public Especialidade getEspecialidade() {
-        return especialidade;
-    }
-
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public String getHoraInicCon() {
-        return horaInicCon;
-    }
-
-    public String getHoraFimCon() {
-        return horaFimCon;
-    }
-
-    public Boolean getPagou() {
-        return pagou;
-    }
-
-    public Double getValorPago() {
-        return valorPago;
-    }
-
-    public String getFormaPagamento() {
-        return formaPagamento;
-    }
-
-    public Diagnostico getDiagnostico() {
-        return diagnostico;
     }
 
     @Override

@@ -12,9 +12,11 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
 @Table(name = "diagnostico")
+@Builder
 public final class Diagnostico {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long idDiagnostico;
     private String tratamentoRecomendado;
