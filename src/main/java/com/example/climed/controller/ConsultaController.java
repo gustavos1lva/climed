@@ -63,6 +63,7 @@ public class ConsultaController {
 
         return consultaRepository.save(
                 Consulta.builder()
+                        .data(createConsultaRequest.date())
                         .paciente(paciente)
                         .medico(Medico.builder().crm(createConsultaRequest.crm()).build())
                         .especialidade(Especialidade.builder().idEsp(createConsultaRequest.idEsp()).build())
