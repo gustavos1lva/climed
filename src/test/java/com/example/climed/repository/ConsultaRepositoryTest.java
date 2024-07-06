@@ -24,7 +24,6 @@ class ConsultaRepositoryTest {
     void Should_Find_Consulta_By_Medico_And_Paciente() {
         var medico = medicoRepository.findById(123456L).get();
         var paciente = pacienteRepository.findById(101L).get();
-        var consultaEsperada = new Consulta(1L, medico, null, paciente, null, null, null, null, null, null, null);
 
         var consulta = consultaRepository.findConsultaByMedicoAndPaciente(
                 medico,
@@ -32,7 +31,10 @@ class ConsultaRepositoryTest {
         );
         assertThat(consulta)
                 .isNotNull()
-                .isEqualTo(consultaEsperada)
+                .isNotEmpty()
+                .hasSize(2)
+                .allMatch(c -> c.getPaciente().getIdPac() == 101L)
+                .allMatch(c -> c.getMedico().getCrm() == 123456L)
         ;
     }
 }
