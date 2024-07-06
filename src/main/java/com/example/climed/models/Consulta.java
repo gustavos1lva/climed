@@ -2,7 +2,6 @@ package com.example.climed.models;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -72,31 +71,6 @@ public final class Consulta {
 
     public Consulta() {
         /* empty on purpose */
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == this)
-            return true;
-        if(obj == null || obj.getClass() != this.getClass())
-            return false;
-        var that = (Consulta)obj;
-        return Objects.equals(this.idCon, that.idCon) &&
-                Objects.equals(this.medico, that.medico) &&
-                Objects.equals(this.especialidade, that.especialidade) &&
-                Objects.equals(this.paciente, that.paciente) &&
-                Objects.equals(this.data, that.data) &&
-                Objects.equals(this.horaInicCon, that.horaInicCon) &&
-                Objects.equals(this.horaFimCon, that.horaFimCon) &&
-                Objects.equals(this.pagou, that.pagou) &&
-                Objects.equals(this.valorPago, that.valorPago) &&
-                Objects.equals(this.formaPagamento, that.formaPagamento) &&
-                Objects.equals(this.diagnostico, that.diagnostico);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idCon, medico, especialidade, paciente, data, horaInicCon, horaFimCon, pagou, valorPago, formaPagamento, diagnostico);
     }
 
     @Override

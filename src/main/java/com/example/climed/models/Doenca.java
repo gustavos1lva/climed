@@ -1,7 +1,8 @@
 package com.example.climed.models;
 
-import java.util.Objects;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import jakarta.persistence.Table;
 public final class Doenca {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long idDoenca;
     private String nomeDoenca;
+    @JsonIgnore
     @ManyToMany(mappedBy = "doenca") private Set<Diagnostico> diagnosticos;
 
     public Doenca(
@@ -43,23 +45,6 @@ public final class Doenca {
 
     public Set<Diagnostico> getDiagnosticos() {
         return diagnosticos;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == this)
-            return true;
-        if(obj == null || obj.getClass() != this.getClass())
-            return false;
-        var that = (Doenca)obj;
-        return Objects.equals(this.idDoenca, that.idDoenca) &&
-                Objects.equals(this.nomeDoenca, that.nomeDoenca) &&
-                Objects.equals(this.diagnosticos, that.diagnosticos);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idDoenca, nomeDoenca, diagnosticos);
     }
 
     @Override

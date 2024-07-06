@@ -1,7 +1,8 @@
 package com.example.climed.models;
 
-import java.util.Objects;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,11 +24,13 @@ public final class Especialidade {
     //    @Column(name = "id_esp")
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long idEsp;
     private String nomeEsp;
-    private Integer indice;
-    @OneToMany(mappedBy = "especialidade") private Set<Consulta> consultas;
-    @ManyToMany(mappedBy = "medico") private Set<Medico> medicos;
+    private String indice;
+    @JsonIgnore @OneToMany(mappedBy = "especialidade") private Set<Consulta> consultas;
 
-    public Especialidade(final Long idEsp, final String nomeEsp, final Integer indice, final Set<Consulta> consultas, final Set<Medico> medicos) {
+    @JsonIgnore
+    @ManyToMany(mappedBy = "especialidades") private Set<Medico> medicos;
+
+    public Especialidade(final Long idEsp, final String nomeEsp, final String indice, final Set<Consulta> consultas, final Set<Medico> medicos) {
         this.idEsp = idEsp;
         this.nomeEsp = nomeEsp;
         this.indice = indice;
@@ -37,24 +40,6 @@ public final class Especialidade {
 
     public Especialidade() {
         /* empty on purpose */
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == this)
-            return true;
-        if(obj == null || obj.getClass() != this.getClass())
-            return false;
-        var that = (Especialidade)obj;
-        return Objects.equals(this.idEsp, that.idEsp) &&
-                Objects.equals(this.nomeEsp, that.nomeEsp) &&
-                Objects.equals(this.indice, that.indice) &&
-                Objects.equals(this.consultas, that.consultas);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idEsp, nomeEsp, indice, consultas);
     }
 
     @Override

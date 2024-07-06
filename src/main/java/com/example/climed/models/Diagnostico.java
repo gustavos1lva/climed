@@ -1,7 +1,8 @@
 package com.example.climed.models;
 
-import java.util.Objects;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +25,7 @@ public final class Diagnostico {
     private String observacoes;
     @OneToOne @JoinColumn(name = "id_con"/*, referencedColumnName = "id_con"*/) private Consulta consulta;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "diagnostica", joinColumns = @JoinColumn(name = "id_diagnostico"), inverseJoinColumns = @JoinColumn(name = "id_doenca"))
     private Set<Doenca> doenca;
@@ -97,26 +99,6 @@ public final class Diagnostico {
 
     public void setDoenca(final Set<Doenca> doenca) {
         this.doenca = doenca;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == this)
-            return true;
-        if(obj == null || obj.getClass() != this.getClass())
-            return false;
-        var that = (Diagnostico)obj;
-        return Objects.equals(this.idDiagnostico, that.idDiagnostico) &&
-                Objects.equals(this.tratamentoRecomendado, that.tratamentoRecomendado) &&
-                Objects.equals(this.remediosReceitados, that.remediosReceitados) &&
-                Objects.equals(this.observacoes, that.observacoes) &&
-                Objects.equals(this.consulta, that.consulta) &&
-                Objects.equals(this.doenca, that.doenca);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idDiagnostico, tratamentoRecomendado, remediosReceitados, observacoes, consulta, doenca);
     }
 
     @Override

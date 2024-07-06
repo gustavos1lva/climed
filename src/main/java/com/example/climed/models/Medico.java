@@ -1,7 +1,8 @@
 package com.example.climed.models;
 
-import java.util.Objects;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -24,8 +25,9 @@ public final class Medico {
     private String nomeMedico;
     private String telefoneMedico;
     private Double percentual;
-    @OneToMany(mappedBy = "medico") private Set<Agenda> agendas;
+    @JsonIgnore @OneToMany(mappedBy = "medico") private Set<Agenda> agendas;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "exerce_esp", joinColumns = @JoinColumn(name = "crm"), inverseJoinColumns = @JoinColumn(name = "id_esp"))
     private Set<Especialidade> especialidades;
@@ -42,25 +44,6 @@ public final class Medico {
 
     public Medico() {
         /* empty on purpose */
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == this)
-            return true;
-        if(obj == null || obj.getClass() != this.getClass())
-            return false;
-        var that = (Medico)obj;
-        return Objects.equals(this.crm, that.crm) &&
-                Objects.equals(this.nomeMedico, that.nomeMedico) &&
-                Objects.equals(this.telefoneMedico, that.telefoneMedico) &&
-                Objects.equals(this.percentual, that.percentual) &&
-                Objects.equals(this.agendas, that.agendas);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(crm, nomeMedico, telefoneMedico, percentual, agendas);
     }
 
     @Override

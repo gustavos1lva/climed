@@ -1,7 +1,8 @@
 package com.example.climed.models;
 
-import java.util.Objects;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ public final class Paciente {
     private String endereco;
     private Integer idade;
     private String sexo;
-    @OneToMany(mappedBy = "paciente") private Set<Consulta> consultas;
+    @JsonIgnore @OneToMany(mappedBy = "paciente") private Set<Consulta> consultas;
 
     public Paciente(
             Long idPac,
@@ -79,28 +80,6 @@ public final class Paciente {
 
     public Set<Consulta> getConsultas() {
         return consultas;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == this)
-            return true;
-        if(obj == null || obj.getClass() != this.getClass())
-            return false;
-        var that = (Paciente)obj;
-        return Objects.equals(this.idPac, that.idPac) &&
-                Objects.equals(this.cpf, that.cpf) &&
-                Objects.equals(this.nomePac, that.nomePac) &&
-                Objects.equals(this.telefonePac, that.telefonePac) &&
-                Objects.equals(this.endereco, that.endereco) &&
-                Objects.equals(this.idade, that.idade) &&
-                Objects.equals(this.sexo, that.sexo) &&
-                Objects.equals(this.consultas, that.consultas);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idPac, cpf, nomePac, telefonePac, endereco, idade, sexo, consultas);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.example.climed.models;
 
-import java.util.Objects;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -57,25 +55,6 @@ public final class Agenda {
 
     public Medico getMedico() {
         return medico;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == this)
-            return true;
-        if(obj == null || obj.getClass() != this.getClass())
-            return false;
-        var that = (Agenda)obj;
-        return Objects.equals(this.idAgenda, that.idAgenda) &&
-                Objects.equals(this.diaSemana, that.diaSemana) &&
-                Objects.equals(this.horaInicio, that.horaInicio) &&
-                Objects.equals(this.horaFim, that.horaFim) &&
-                Objects.equals(this.medico, that.medico);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idAgenda, diaSemana, horaInicio, horaFim, medico);
     }
 
     @Override
