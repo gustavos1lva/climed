@@ -11,5 +11,6 @@ import com.example.climed.models.Paciente;
 public interface PacienteRepository extends CrudRepository<Paciente, Long> {
 
     Optional<Paciente> findByNomePacAndTelefonePac(String nomePac, String telefonePac);
+
     Optional<Paciente> findByCpf(String cpf);
 }

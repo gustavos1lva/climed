@@ -35,23 +35,16 @@ public class PacienteController {
                     .build();
 
             Paciente novoPaciente = pacienteRepository.save(paciente);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Paciente salvo com sucesso. ID: " + novoPaciente.getIdPac());
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body("Paciente salvo com sucesso. ID: " + novoPaciente.getIdPac());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar paciente: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao salvar paciente: " + e.getMessage());
         }
     }
 
     @GetMapping("/buscarPorCpf")
-    public ResponseEntity<?> buscarPorCpf(@RequestParam String cpf) {
-        try {
-            Optional<Paciente> paciente = pacienteRepository.findByCpf(cpf);
-            if (paciente.isPresent()) {
-                return ResponseEntity.ok(paciente.get());
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado para CPF: " + cpf);
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao buscar paciente por CPF: " + e.getMessage());
-        }
+    public Optional<Paciente> buscarPorCpf(@RequestParam String cpf) {
+        return pacienteRepository.findByCpf(cpf);
     }
 }
