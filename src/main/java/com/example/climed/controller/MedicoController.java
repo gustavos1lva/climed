@@ -1,5 +1,7 @@
 package com.example.climed.controller;
 
+import static com.example.climed.controller.MedicoController.ENDPOINT;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -12,8 +14,9 @@ import com.example.climed.models.Medico;
 import com.example.climed.repository.EspecialidadeRepository;
 import com.example.climed.repository.MedicoRepository;
 
-@Controller("/medico")
+@Controller(ENDPOINT)
 public class MedicoController {
+    public static final String ENDPOINT = "medico";
 
     private final MedicoRepository medicoRepository;
     private final EspecialidadeRepository especialidadeRepository;
@@ -23,28 +26,28 @@ public class MedicoController {
         this.especialidadeRepository = especialidadeRepository;
     }
 
-    @GetMapping("/nome")
+    @GetMapping(ENDPOINT + "/nome")
     public List<Medico> getByName(@RequestParam("nome") String nome) {
         return medicoRepository.findByNomeMedico(nome);
     }
 
-    @GetMapping("/especialidade")
+    @GetMapping(ENDPOINT + "/especialidade")
     public List<Medico> getByEspecialidade(@RequestParam("especialidade") String especialidade) {
         return medicoRepository.findByEspecialidades(
                 new HashSet<>(especialidadeRepository.findByNomeEsp(especialidade))
         );
     }
 
-    @GetMapping("/nome_especialidade")
-    public List<Medico> getByEspecialidade(@RequestParam("especialidade") String especialidade, @RequestParam("nome") String nome) {
+    @GetMapping(ENDPOINT + "/nome_especialidade")
+    public List<Medico> getByNomeAndEspecialidade(@RequestParam("especialidade") String especialidade, @RequestParam("nome") String nome) {
         return medicoRepository.findByNomeMedicoAndEspecialidades(
                 nome,
                 new HashSet<>(especialidadeRepository.findByNomeEsp(especialidade))
         );
     }
 
-    @GetMapping
-    public Optional<Medico> getByEspecialidade(@RequestParam("crm") Long crm) {
+    @GetMapping(ENDPOINT)
+    public Optional<Medico> getByCrm(@RequestParam("crm") Long crm) {
         return medicoRepository.findById(crm);
     }
 

@@ -20,8 +20,9 @@ import com.example.climed.models.Paciente;
 import com.example.climed.repository.ConsultaRepository;
 import com.example.climed.repository.PacienteRepository;
 
-@Controller("/consulta")
+@Controller(ConsultaController.ENDPOINT)
 public class ConsultaController {
+    public static final String ENDPOINT = "consulta";
 
     private final ConsultaRepository consultaRepository;
     private final PacienteRepository pacienteRepository;
@@ -31,12 +32,12 @@ public class ConsultaController {
         this.pacienteRepository = pacienteRepository;
     }
 
-    @GetMapping("/especialidade")
+    @GetMapping(ENDPOINT + "/especialidade")
     public List<Consulta> getByDateAndEspecialidade(@RequestParam("date") Date date, @RequestParam("especialidade") String especialidade) {
         return consultaRepository.findConsultaByDataAndEspecialidade_NomeEsp(date, especialidade);
     }
 
-    @GetMapping("/medico")
+    @GetMapping(ENDPOINT + "/medico")
     public List<Consulta> getByDateAndEspecialidadeAndMedico(
             @RequestParam("date") Date date,
             @RequestParam("especialidade") String especialidade,
@@ -45,7 +46,7 @@ public class ConsultaController {
         return consultaRepository.findConsultaByDataAndEspecialidade_NomeEspAndMedico_NomeMedico(date, especialidade, medico);
     }
 
-    @PostMapping
+    @PostMapping(ENDPOINT)
     public Consulta createConsulta(@RequestBody CreateConsultaRequest createConsultaRequest) {
         var paciente = pacienteRepository.findByNomePacAndTelefonePac(createConsultaRequest.nomePaciente(), createConsultaRequest.telefonePaciente())
                 .orElse(pacienteRepository.save(
@@ -67,7 +68,7 @@ public class ConsultaController {
 
     }
 
-    @PutMapping
+    @PutMapping(ENDPOINT)
     public Consulta updateConsulta(@RequestBody UpdateConsultaRequest updateConsultaRequest) {
 
         var consulta = consultaRepository.findById(updateConsultaRequest.idConsulta())
