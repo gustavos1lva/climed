@@ -60,12 +60,6 @@ create table if not exists consulta
     forma_pagamento varchar(50)
 );
 
-create table if not exists diagnostica
-(
-    id_diagnostica serial primary key,
-    id_doenca      int references doenca (id_doenca) on delete cascade
-);
-
 create table if not exists diagnostico
 (
     id_diagnostico         serial primary key,
@@ -74,3 +68,11 @@ create table if not exists diagnostico
     observacoes            text,
     id_con                 int references consulta (id_con) on delete cascade
 );
+
+create table if not exists diagnostica
+(
+    id_diagnostica serial primary key,
+    id_diagnostico int references diagnostico (id_diagnostico) on delete cascade,
+    id_doenca      int references doenca (id_doenca) on delete cascade
+);
+

@@ -1,13 +1,15 @@
 package com.example.climed.models;
 
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -19,7 +21,10 @@ public final class Diagnostico {
     private String remediosReceitados;
     private String observacoes;
     @OneToOne @JoinColumn(name = "id_con"/*, referencedColumnName = "id_con"*/) private Consulta consulta;
-    @ManyToOne @JoinColumn(name = "id_doenca"/*, referencedColumnName = "id_doenca"*/) private Doenca doenca;
+
+    @ManyToMany
+    @JoinTable(name = "diagnostica", joinColumns = @JoinColumn(name = "id_diagnostico"), inverseJoinColumns = @JoinColumn(name = "id_doenca"))
+    private Set<Doenca> doenca;
 
     public Diagnostico(
             Long idDiagnostico,
@@ -30,7 +35,7 @@ public final class Diagnostico {
 
             Consulta consulta,
 
-            Doenca doenca
+            Set<Doenca> doenca
     ) {
         this.idDiagnostico = idDiagnostico;
         this.tratamentoRecomendado = tratamentoRecomendado;
@@ -84,11 +89,11 @@ public final class Diagnostico {
         this.consulta = consulta;
     }
 
-    public Doenca getDoenca() {
+    public Set<Doenca> getDoenca() {
         return doenca;
     }
 
-    public void setDoenca(final Doenca doenca) {
+    public void setDoenca(final Set<Doenca> doenca) {
         this.doenca = doenca;
     }
 

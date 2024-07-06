@@ -48,8 +48,9 @@ select 'Tratamento para Doença ' || (random() * 20) + 1         as tratamento_r
        (random() * 99) + 1                                      as id_con
 from generate_series(1, 100);
 
-insert into diagnostica (id_doenca)
-SELECT (random() * 19) + 1 as id_doenca
+insert into diagnostica (id_doenca, id_diagnostico)
+SELECT (random() * 19) + 1 as id_doenca,
+       (random() * 99) + 1 as id_diagnostico
 FROM generate_series(1, 100);
 
 -- questao 3-a

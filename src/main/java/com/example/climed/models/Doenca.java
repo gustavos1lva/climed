@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 public final class Doenca {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long idDoenca;
     private String nomeDoenca;
-    @OneToMany(mappedBy = "doenca") private Set<Diagnostico> diagnosticos;
+    @ManyToMany(mappedBy = "doenca") private Set<Diagnostico> diagnosticos;
 
     public Doenca(
             Long idDoenca,
