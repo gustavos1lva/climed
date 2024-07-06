@@ -9,7 +9,7 @@ public record CreateConsultaRequest(
 
         String nomePaciente,
         String telefonePaciente,
-        @DateTimeFormat(pattern = "dd-MM-yyyy")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         Date date,
         Long crm,
         Long idEsp,
