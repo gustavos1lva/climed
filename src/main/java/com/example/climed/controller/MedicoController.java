@@ -54,16 +54,30 @@ public class MedicoController {
     }
     
     @GetMapping(ENDPOINT + "/nome_especialidade")
-    public List<Medico> getByNomeAndEspecialidade(@RequestParam("especialidade") String especialidade, @RequestParam("nome") String nome) {
-        return medicoRepository.findByNomeMedicoAndEspecialidades(
+    public ResponseEntity<?> getByNomeAndEspecialidade(@RequestParam("especialidade") String especialidade, @RequestParam("nome") String nome) {
+        List<Especialidade> especialidades = especialidadeRepository.findByNomeEsp(especialidade);
+        if (especialidades.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Especialidade not found");
+        }
+    
+        List<Medico> medicos = medicoRepository.findByNomeMedicoAndEspecialidades(
                 nome,
-                new HashSet<>(especialidadeRepository.findByNomeEsp(especialidade))
+                new HashSet<>(especialidades)
         );
+        if (medicos.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: No Medico found for the given Nome and Especialidade");
+        }
+    
+        return ResponseEntity.ok(medicos);
     }
 
     @GetMapping(ENDPOINT)
-    public Optional<Medico> getByCrm(@RequestParam("crm") Long crm) {
-        return medicoRepository.findById(crm);
+    public ResponseEntity<?> getByCrm(@RequestParam("crm") Long crm) {
+        Optional<Medico> medico = medicoRepository.findById(crm);
+        if (!medico.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Medico not found");
+        }
+        return ResponseEntity.ok(medico.get());
     }
 
 }

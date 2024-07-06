@@ -44,7 +44,16 @@ public class PacienteController {
     }
 
     @GetMapping("/buscarPorCpf")
-    public Optional<Paciente> buscarPorCpf(@RequestParam String cpf) {
-        return pacienteRepository.findByCpf(cpf);
+    public ResponseEntity<?> buscarPorCpf(@RequestParam String cpf) {
+        if (cpf == null || cpf.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: CPF cannot be null");
+        }
+
+        Optional<Paciente> paciente = pacienteRepository.findByCpf(cpf);
+        if (paciente.isPresent()) {
+            return ResponseEntity.ok(paciente);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Paciente not found");
+        }
     }
 }
