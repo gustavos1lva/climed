@@ -6,10 +6,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.climed.models.Especialidade;
 import com.example.climed.models.Medico;
 import com.example.climed.repository.EspecialidadeRepository;
 import com.example.climed.repository.MedicoRepository;
@@ -27,17 +30,29 @@ public class MedicoController {
     }
 
     @GetMapping(ENDPOINT + "/nome")
-    public List<Medico> getByName(@RequestParam("nome") String nome) {
-        return medicoRepository.findByNomeMedico(nome);
+    public ResponseEntity<?> getByName(@RequestParam("nome") String nome) {
+        List<Medico> medicos = medicoRepository.findByNomeMedico(nome);
+        if (medicos.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Medico not found");
+        }
+        return ResponseEntity.ok(medicos);
     }
 
     @GetMapping(ENDPOINT + "/especialidade")
-    public List<Medico> getByEspecialidade(@RequestParam("especialidade") String especialidade) {
-        return medicoRepository.findByEspecialidades(
-                new HashSet<>(especialidadeRepository.findByNomeEsp(especialidade))
-        );
+    public ResponseEntity<?> getByEspecialidade(@RequestParam("especialidade") String especialidade) {
+        List<Especialidade> especialidades = especialidadeRepository.findByNomeEsp(especialidade);
+        if (especialidades.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Especialidade not found");
+        }
+        
+        List<Medico> medicos = medicoRepository.findByEspecialidades(new HashSet<>(especialidades));
+        if (medicos.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: No Medico found for the given Especialidade");
+        }
+        
+        return ResponseEntity.ok(medicos);
     }
-
+    
     @GetMapping(ENDPOINT + "/nome_especialidade")
     public List<Medico> getByNomeAndEspecialidade(@RequestParam("especialidade") String especialidade, @RequestParam("nome") String nome) {
         return medicoRepository.findByNomeMedicoAndEspecialidades(

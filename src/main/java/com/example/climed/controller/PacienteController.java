@@ -4,7 +4,6 @@ import static com.example.climed.controller.PacienteController.ENDPOINT;
 
 import java.util.Optional;
 
-import com.example.climed.models.Medico;
 import com.example.climed.models.Paciente;
 import com.example.climed.repository.PacienteRepository;
 import com.example.climed.controller.model.CreatePacienteRequest;
