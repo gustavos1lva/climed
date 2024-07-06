@@ -6,15 +6,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.climed.models.Medico;
 import com.example.climed.repository.EspecialidadeRepository;
 import com.example.climed.repository.MedicoRepository;
 
-@Controller(ENDPOINT)
+@RestController(ENDPOINT)
 public class MedicoController {
     public static final String ENDPOINT = "medico";
 

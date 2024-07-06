@@ -5,14 +5,14 @@ import static com.example.climed.controller.EspecialidadeController.ENDPOINT;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.climed.models.Especialidade;
 import com.example.climed.repository.EspecialidadeRepository;
 
-@Controller(ENDPOINT)
+@RestController(ENDPOINT)
 public class EspecialidadeController {
     public static final String ENDPOINT = "especialidade";
 
