@@ -1,5 +1,7 @@
 package com.example.climed.models;
 
+import java.util.Objects;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,17 +12,80 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "agenda")
-public record Agenda(
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        Long idAgenda,
+public final class Agenda {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long idAgenda;
+    private String diaSemana;
+    private String horaInicio;
+    private String horaFim;
+    @ManyToOne @JoinColumn(name = "crm"/*, referencedColumnName = "crm"*/) private Medico medico;
 
-        String diaSemana,
-        String horaInicio,
-        String horaFim,
+    public Agenda(
+            Long idAgenda,
 
-        @ManyToOne
-        @JoinColumn(name = "crm", referencedColumnName = "crm")
-        Medico medico
-) {
+            String diaSemana,
+            String horaInicio,
+            String horaFim,
+
+            Medico medico
+    ) {
+        this.idAgenda = idAgenda;
+        this.diaSemana = diaSemana;
+        this.horaInicio = horaInicio;
+        this.horaFim = horaFim;
+        this.medico = medico;
+    }
+
+    public Agenda() {
+        /* empty on purpose */
+    }
+
+    public Long getIdAgenda() {
+        return idAgenda;
+    }
+
+    public String getDiaSemana() {
+        return diaSemana;
+    }
+
+    public String getHoraInicio() {
+        return horaInicio;
+    }
+
+    public String getHoraFim() {
+        return horaFim;
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this)
+            return true;
+        if(obj == null || obj.getClass() != this.getClass())
+            return false;
+        var that = (Agenda)obj;
+        return Objects.equals(this.idAgenda, that.idAgenda) &&
+                Objects.equals(this.diaSemana, that.diaSemana) &&
+                Objects.equals(this.horaInicio, that.horaInicio) &&
+                Objects.equals(this.horaFim, that.horaFim) &&
+                Objects.equals(this.medico, that.medico);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idAgenda, diaSemana, horaInicio, horaFim, medico);
+    }
+
+    @Override
+    public String toString() {
+        return "Agenda[" +
+                "idAgenda=" + idAgenda + ", " +
+                "diaSemana=" + diaSemana + ", " +
+                "horaInicio=" + horaInicio + ", " +
+                "horaFim=" + horaFim + ", " +
+                "medico=" + medico + ']';
+    }
+
 }

@@ -1,14 +1,14 @@
 create table if not exists doenca
 (
-    id_doenca serial primary key,
-    nome_d    varchar(50) not null
+    id_doenca   serial primary key,
+    nome_doenca varchar(50) not null
 );
 
 create table if not exists paciente
 (
     id_pac       serial primary key,
     cpf          varchar(20) unique not null,
-    nome_p       varchar(50)        not null,
+    nome_pac     varchar(50)        not null,
     telefone_pac varchar(20) unique not null,
     endereco     varchar(100),
     idade        int                not null,
@@ -17,10 +17,10 @@ create table if not exists paciente
 
 create table if not exists medico
 (
-    crm        int primary key,
-    nome_m     varchar(50) not null,
-    telefone_m varchar(20) not null unique,
-    percentual real        not null
+    crm             int primary key,
+    nome_medico     varchar(50) not null,
+    telefone_medico varchar(20) not null unique,
+    percentual      real        not null
 );
 
 create table if not exists agenda
@@ -34,9 +34,9 @@ create table if not exists agenda
 
 create table if not exists especialidade
 (
-    id_esp serial primary key,
-    nome_e varchar(50) not null,
-    indice varchar(50)
+    id_esp   serial primary key,
+    nome_esp varchar(50) not null,
+    indice   varchar(50)
 );
 
 create table if not exists exerce_esp

@@ -1,21 +1,21 @@
 -- aleatorios
 
-insert into medico (crm, nome_m, telefone_m, percentual)
+insert into medico (crm, nome_medico, telefone_medico, percentual)
 select generate_series(1, 100)      as crm,
-       generate_series(1, 100)      as nome_m,
-       floor(random() * 1000000000) as telefone_m,
+       generate_series(1, 100)      as nome_medico,
+       floor(random() * 1000000000) as telefone_medico,
        random() * 100               as percentual;
 
-insert into paciente (cpf, nome_p, telefone_pac, endereco, idade, sexo)
+insert into paciente (cpf, nome_pac, telefone_pac, endereco, idade, sexo)
 select generate_series(1, 100)                                       as cpf,
-       generate_series(1, 100)                                       as nome_p,
+       generate_series(1, 100)                                       as nome_pac,
        generate_series(101, 200)                                     as telefone_pac,
        generate_series(1, 100)                                       as endereco,
        floor(random() * 90) + 10                                     as idade,
        case when random() > 0.5 then 'Masculino' else 'Feminino' end as sexo;
 
-insert into especialidade (nome_e, indice)
-select 'Especialidade ' || generate_series(1, 10) as nome_e,
+insert into especialidade (nome_esp, indice)
+select 'Especialidade ' || generate_series(1, 10) as nome_esp,
        'Índice ' || generate_series(1, 10)        as indice;
 
 insert into exerce_esp (crm, id_esp)
@@ -23,8 +23,8 @@ select (random() * 99) + 1 as crm,
        (random() * 9) + 1  as id_esp
 from generate_series(1, 100);
 
-insert into doenca (nome_d)
-select 'Doença ' || generate_series(1, 20) as nome_d;
+insert into doenca (nome_doenca)
+select 'Doença ' || generate_series(1, 20) as nome_doenca;
 
 insert into consulta (crm, id_esp, id_pac, data, hora_inic_con, hora_fim_con, pagou, valor_pago, forma_pagamento)
 select (random() * 99) + 1                                           as crm,
@@ -54,11 +54,11 @@ FROM generate_series(1, 100);
 
 -- questao 3-a
 
-insert into especialidade (nome_e, indice)
+insert into especialidade (nome_esp, indice)
 VALUES ('Cardiologia',
         8);
 
-insert into medico (crm, nome_m, telefone_m, percentual)
+insert into medico (crm, nome_medico, telefone_medico, percentual)
 VALUES (123456,
         'Dr. House',
         floor(random() * 1000000000),
@@ -67,7 +67,7 @@ VALUES (123456,
 insert into exerce_esp (crm, id_esp)
 VALUES (123456, (select id_esp from especialidade where indice = '8'));
 
-INSERT INTO paciente (cpf, nome_p, telefone_pac, endereco, idade, sexo)
+INSERT INTO paciente (cpf, nome_pac, telefone_pac, endereco, idade, sexo)
 VALUES (floor(random() * 1000000000),
         'Diego Pituca',
         floor(random() * 1000000000),
@@ -77,26 +77,26 @@ VALUES (floor(random() * 1000000000),
 
 insert into consulta (crm, id_esp, id_pac, data, hora_inic_con, hora_fim_con, pagou, valor_pago, forma_pagamento)
 select 123456,
-       (select id_esp from especialidade where indice = '8')       as id_esp,
-       (select id_pac from paciente where nome_p = 'Diego Pituca') as id_pac,
-       '2024-05-05'                                                as data,
-       '2024-05-05 14:00:00.000000'                                as hora_inic_con,
-       '2024-05-05 15:00:00.000000'                                as hora_fim_con,
-       true                                                        as pagou,
-       300                                                         as valor_pago,
-       'Cartão'                                                    as forma_pagamento
+       (select id_esp from especialidade where indice = '8')         as id_esp,
+       (select id_pac from paciente where nome_pac = 'Diego Pituca') as id_pac,
+       '2024-05-05'                                                  as data,
+       '2024-05-05 14:00:00.000000'                                  as hora_inic_con,
+       '2024-05-05 15:00:00.000000'                                  as hora_fim_con,
+       true                                                          as pagou,
+       300                                                           as valor_pago,
+       'Cartão'                                                      as forma_pagamento
 ;
 
 -- questao 3b)
 
-insert into especialidade (nome_e, indice)
+insert into especialidade (nome_esp, indice)
 VALUES ('Dermatologia',
         9);
 
 insert into exerce_esp (crm, id_esp)
 VALUES (123456, (select id_esp from especialidade where indice = '9'));
 
-insert into medico (crm, nome_m, telefone_m, percentual)
+insert into medico (crm, nome_medico, telefone_medico, percentual)
 VALUES (654321,
         'Dr. Kildare',
         floor(random() * 1000000000),
@@ -107,7 +107,7 @@ VALUES (654321, (select id_esp from especialidade where indice = '9'));
 
 -- questao 3c)
 
-insert into medico (crm, nome_m, telefone_m, percentual)
+insert into medico (crm, nome_medico, telefone_medico, percentual)
 VALUES (111111,
         'Dr. Knowitall',
         floor(random() * 1000000000),
@@ -134,12 +134,12 @@ select generate_series(0, 5)                                                 as 
 
 insert into consulta (crm, id_esp, id_pac, data, hora_inic_con, hora_fim_con, pagou, valor_pago, forma_pagamento)
 select 123456,
-       (select id_esp from especialidade where indice = '9')       as id_esp,
-       (select id_pac from paciente where nome_p = 'Diego Pituca') as id_pac,
-       '2024-05-10'                                                as data,
-       '2024-05-10 10:00:00.000000'                                as hora_inic_con,
+       (select id_esp from especialidade where indice = '9')         as id_esp,
+       (select id_pac from paciente where nome_pac = 'Diego Pituca') as id_pac,
+       '2024-05-10'                                                  as data,
+       '2024-05-10 10:00:00.000000'                                  as hora_inic_con,
        null,
-       true                                                        as pagou,
-       500                                                         as valor_pago,
-       'Dinheiro'                                                  as forma_pagamento
+       true                                                          as pagou,
+       500                                                           as valor_pago,
+       'Dinheiro'                                                    as forma_pagamento
 ;
