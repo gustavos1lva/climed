@@ -53,7 +53,7 @@ public class ConsultaController {
     @PostMapping(ENDPOINT)
     public Consulta createConsulta(@RequestBody CreateConsultaRequest createConsultaRequest) {
         var paciente = pacienteRepository.findByNomePacAndTelefonePac(createConsultaRequest.nomePaciente(), createConsultaRequest.telefonePaciente())
-                .orElse(pacienteRepository.save(
+                .orElseGet(() -> pacienteRepository.save(
                                 Paciente.builder()
                                         .nomePac(createConsultaRequest.nomePaciente())
                                         .telefonePac(createConsultaRequest.telefonePaciente())
