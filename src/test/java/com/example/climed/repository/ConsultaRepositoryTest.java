@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.climed.models.Consulta;
-
 @SpringBootTest
 class ConsultaRepositoryTest {
 
@@ -29,6 +27,25 @@ class ConsultaRepositoryTest {
                 medico,
                 paciente
         );
+        assertThat(consulta)
+                .isNotNull()
+                .isNotEmpty()
+                .hasSize(2)
+                .allMatch(c -> c.getPaciente().getIdPac() == 101L)
+                .allMatch(c -> c.getMedico().getCrm() == 123456L)
+        ;
+    }
+
+    @Test
+    void Should_Find_Consulta_By_Crm_And_IdPac() {
+        var crm = 123456L;
+        var idPac = 101L;
+
+        var consulta = consultaRepository.findConsultaByMedico_CrmAndPaciente_IdPac(
+                crm,
+                idPac
+        );
+
         assertThat(consulta)
                 .isNotNull()
                 .isNotEmpty()
