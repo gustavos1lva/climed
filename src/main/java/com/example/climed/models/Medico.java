@@ -5,13 +5,20 @@ import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "medico")
 @Builder
+@Getter
+@Setter
 public final class Medico {
     @Id private Long crm;
     private String nomeMedico;
@@ -19,44 +26,22 @@ public final class Medico {
     private Double percentual;
     @OneToMany(mappedBy = "medico") private Set<Agenda> agendas;
 
-    public Medico(
-            Long crm,
+    @ManyToMany
+    @JoinTable(name = "exerce_esp", joinColumns = @JoinColumn(name = "crm"), inverseJoinColumns = @JoinColumn(name = "id_esp"))
+    private Set<Especialidade> especialidades;
 
-            String nomeMedico,
-            String telefoneMedico,
-            Double percentual,
-
-            Set<Agenda> agendas
-    ) {
+    public Medico(final Long crm, final String nomeMedico, final String telefoneMedico, final Double percentual, final Set<Agenda> agendas,
+            final Set<Especialidade> especialidades) {
         this.crm = crm;
         this.nomeMedico = nomeMedico;
         this.telefoneMedico = telefoneMedico;
         this.percentual = percentual;
         this.agendas = agendas;
+        this.especialidades = especialidades;
     }
 
     public Medico() {
         /* empty on purpose */
-    }
-
-    public Long getCrm() {
-        return crm;
-    }
-
-    public String getNomeMedico() {
-        return nomeMedico;
-    }
-
-    public String getTelefoneMedico() {
-        return telefoneMedico;
-    }
-
-    public Double getPercentual() {
-        return percentual;
-    }
-
-    public Set<Agenda> getAgendas() {
-        return agendas;
     }
 
     @Override

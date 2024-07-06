@@ -7,52 +7,36 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "especialidade")
 @Builder
+@Getter
+@Setter
 public final class Especialidade {
     //    @Column(name = "id_esp")
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long idEsp;
     private String nomeEsp;
     private Integer indice;
     @OneToMany(mappedBy = "especialidade") private Set<Consulta> consultas;
+    @ManyToMany(mappedBy = "medico") private Set<Medico> medicos;
 
-    public Especialidade(
-            Long idEsp,
-
-            String nomeEsp,
-            Integer indice,
-
-            Set<Consulta> consultas
-    ) {
+    public Especialidade(final Long idEsp, final String nomeEsp, final Integer indice, final Set<Consulta> consultas, final Set<Medico> medicos) {
         this.idEsp = idEsp;
         this.nomeEsp = nomeEsp;
         this.indice = indice;
         this.consultas = consultas;
+        this.medicos = medicos;
     }
 
     public Especialidade() {
         /* empty on purpose */
-    }
-
-    public Long getIdEsp() {
-        return idEsp;
-    }
-
-    public String getNomeEsp() {
-        return nomeEsp;
-    }
-
-    public Integer getIndice() {
-        return indice;
-    }
-
-    public Set<Consulta> getConsultas() {
-        return consultas;
     }
 
     @Override
