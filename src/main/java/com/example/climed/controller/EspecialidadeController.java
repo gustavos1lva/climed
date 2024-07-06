@@ -27,7 +27,7 @@ public class EspecialidadeController {
         return especialidadeRepository.findByNomeEsp(nome);
     }
 
-    @GetMapping(ENDPOINT)
+    @GetMapping(ENDPOINT + "/id")
     public Optional<Especialidade> getById(@RequestParam("id") Long idEsp) {
         return especialidadeRepository.findById(idEsp);
     }

@@ -22,7 +22,7 @@ public class PacienteController {
         this.pacienteRepository = pacienteRepository;
     }
 
-    @PostMapping("/salvar")
+    @PutMapping(ENDPOINT)
     public ResponseEntity<String> salvarPaciente(@RequestBody CreatePacienteRequest request) {
         try {
             Paciente paciente = Paciente.builder()
