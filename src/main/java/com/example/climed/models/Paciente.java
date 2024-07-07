@@ -16,14 +16,18 @@ import lombok.Builder;
 @Table(name = "paciente")
 @Builder
 public final class Paciente {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long idPac;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idPac;
     private String cpf;
     private String nomePac;
     private String telefonePac;
     private String endereco;
     private Integer idade;
     private String sexo;
-    @JsonIgnore @OneToMany(mappedBy = "paciente") private Set<Consulta> consultas;
+    @JsonIgnore
+    @OneToMany(mappedBy = "paciente")
+    private Set<Consulta> consultas;
 
     public Paciente(
             Long idPac,
@@ -35,8 +39,7 @@ public final class Paciente {
             Integer idade,
             String sexo,
 
-            Set<Consulta> consultas
-    ) {
+            Set<Consulta> consultas) {
         this.idPac = idPac;
         this.cpf = cpf;
         this.nomePac = nomePac;
