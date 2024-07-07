@@ -1,15 +1,20 @@
 package com.example.climed.controller;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.climed.controller.model.CreateConsultaRequest;
 import com.example.climed.controller.model.UpdateConsultaRequest;
@@ -27,10 +32,16 @@ public class ConsultaController {
 
     private final ConsultaRepository consultaRepository;
     private final PacienteRepository pacienteRepository;
+    private final Duration consultaTimeSlot;
 
-    public ConsultaController(final ConsultaRepository consultaRepository, final PacienteRepository pacienteRepository) {
+    public ConsultaController(
+            final ConsultaRepository consultaRepository,
+            final PacienteRepository pacienteRepository,
+            @Value("${consulta.time-slot:60}") final Integer timeSlot
+    ) {
         this.consultaRepository = consultaRepository;
         this.pacienteRepository = pacienteRepository;
+        this.consultaTimeSlot = Duration.ofMinutes(timeSlot);
     }
 
     @GetMapping(ENDPOINT + "/especialidade")
@@ -60,6 +71,18 @@ public class ConsultaController {
                                         .build()
                         )
                 );
+
+        if(
+                consultaRepository.findConsultaByDataAndEspecialidade_IdEspAndMedico_Crm(
+                                createConsultaRequest.date(),
+                                createConsultaRequest.idEsp(),
+                                createConsultaRequest.crm()
+                        )
+                        .stream()
+                        .anyMatch(consulta -> isSameTimeSlot(consulta, createConsultaRequest.horaInicioCon()))
+        ) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ja existe um paciente e ou medico no horario dessa consulta.");
+        }
 
         return consultaRepository.save(
                 Consulta.builder()
@@ -95,5 +118,10 @@ public class ConsultaController {
         consulta.setPagou(updateConsultaRequest.pagou()); // boolean primitive cannot be null
 
         return consultaRepository.save(consulta);
+    }
+
+    private boolean isSameTimeSlot(Consulta consulta, Instant horaInicioConsulta) {
+        return consulta.getHoraInicCon() == horaInicioConsulta ||
+                consulta.getHoraInicCon().plus(consultaTimeSlot).isAfter(horaInicioConsulta);
     }
 }

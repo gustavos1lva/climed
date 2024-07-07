@@ -21,4 +21,6 @@ public interface ConsultaRepository extends CrudRepository<Consulta, Long> {
 
     List<Consulta> findConsultaByDataAndEspecialidade_NomeEspAndMedico_NomeMedico(final LocalDate date, final String nomeEsp, final String nomeMedico);
 
+    List<Consulta> findConsultaByDataAndEspecialidade_IdEspAndMedico_Crm(final LocalDate date, final Long idEsp, final Long crm);
+
 }
