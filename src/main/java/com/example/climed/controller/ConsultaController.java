@@ -73,15 +73,14 @@ public class ConsultaController {
                 );
 
         if(
-                consultaRepository.findConsultaByDataAndEspecialidade_IdEspAndMedico_Crm(
+                consultaRepository.findConsultaByDataAndMedico_Crm(
                                 createConsultaRequest.date(),
-                                createConsultaRequest.idEsp(),
                                 createConsultaRequest.crm()
                         )
                         .stream()
                         .anyMatch(consulta -> isSameTimeSlot(consulta, createConsultaRequest.horaInicioCon()))
         ) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ja existe um paciente e ou medico no horario dessa consulta.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Medico não tem esse horário disponível");
         }
 
         return consultaRepository.save(
