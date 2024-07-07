@@ -1,6 +1,6 @@
 package com.example.climed.controller;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,7 +35,7 @@ public class ConsultaController {
 
     @GetMapping(ENDPOINT + "/especialidade")
     public List<Consulta> getByDateAndEspecialidade(
-            @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+            @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
             @RequestParam("especialidade") String especialidade
     ) {
         return consultaRepository.findConsultaByDataAndEspecialidade_NomeEsp(date, especialidade);
@@ -43,7 +43,7 @@ public class ConsultaController {
 
     @GetMapping(ENDPOINT + "/medico")
     public List<Consulta> getByDateAndEspecialidadeAndMedico(
-            @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+            @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
             @RequestParam("especialidade") String especialidade,
             @RequestParam("medico") String medico
     ) {

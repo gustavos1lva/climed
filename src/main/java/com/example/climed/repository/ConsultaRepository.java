@@ -1,6 +1,6 @@
 package com.example.climed.repository;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -17,8 +17,8 @@ public interface ConsultaRepository extends CrudRepository<Consulta, Long> {
 
     List<Consulta> findConsultaByMedico_CrmAndPaciente_IdPac(final Long crm, final Long idPac);
 
-    List<Consulta> findConsultaByDataAndEspecialidade_NomeEsp(final Date date, final String nomeEsp);
+    List<Consulta> findConsultaByDataAndEspecialidade_NomeEsp(final LocalDate date, final String nomeEsp);
 
-    List<Consulta> findConsultaByDataAndEspecialidade_NomeEspAndMedico_NomeMedico(final Date date, final String nomeEsp, final String nomeMedico);
+    List<Consulta> findConsultaByDataAndEspecialidade_NomeEspAndMedico_NomeMedico(final LocalDate date, final String nomeEsp, final String nomeMedico);
 
 }

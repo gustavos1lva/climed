@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +77,7 @@ class ConsultaRepositoryTest {
                                 .medico(Medico.builder().crm(crm).build())
                                 .paciente(Paciente.builder().idPac(idPac).build())
                                 .especialidade(Especialidade.builder().idEsp(idEsp).build())
-                                .data(Date.from(Instant.now()))
+                                .data(LocalDate.from(Instant.now()))
                                 .horaInicCon(Instant.now())
                                 .build()
                 )

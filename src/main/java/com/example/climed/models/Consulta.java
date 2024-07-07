@@ -1,7 +1,7 @@
 package com.example.climed.models;
 
 import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +25,7 @@ public final class Consulta {
     @ManyToOne @JoinColumn(name = "crm") private Medico medico;
     @ManyToOne @JoinColumn(name = "id_esp"/*, referencedColumnName = "id_esp"*/) private Especialidade especialidade;
     @ManyToOne @JoinColumn(name = "id_pac"/*, referencedColumnName = "id_pac"*/) private Paciente paciente;
-    private Date data;
+    private LocalDate data;
     private Instant horaInicCon;
     private Instant horaFimCon;
     private Boolean pagou;
@@ -42,7 +42,7 @@ public final class Consulta {
 
             Paciente paciente,
 
-            Date data,
+            LocalDate data,
 
             Instant horaInicCon,
 
