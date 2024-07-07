@@ -4,13 +4,18 @@ import static com.example.climed.controller.PacienteController.ENDPOINT;
 
 import java.util.Optional;
 
-import com.example.climed.models.Paciente;
-import com.example.climed.repository.PacienteRepository;
-import com.example.climed.controller.model.CreatePacienteRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.climed.controller.model.CreatePacienteRequest;
+import com.example.climed.models.Paciente;
+import com.example.climed.repository.PacienteRepository;
 
 @RestController(ENDPOINT)
 public class PacienteController {
@@ -22,7 +27,7 @@ public class PacienteController {
         this.pacienteRepository = pacienteRepository;
     }
 
-    @PutMapping(ENDPOINT)
+    @PostMapping(ENDPOINT)
     public ResponseEntity<String> salvarPaciente(@RequestBody CreatePacienteRequest request) {
         try {
             Paciente paciente = Paciente.builder()
@@ -37,7 +42,8 @@ public class PacienteController {
             Paciente novoPaciente = pacienteRepository.save(paciente);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body("Paciente salvo com sucesso. ID: " + novoPaciente.getIdPac());
-        } catch (Exception e) {
+        }
+        catch(Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro ao salvar paciente: " + e.getMessage());
         }
